@@ -34,3 +34,7 @@ add:
 	git add sauvegarde.txt
 	git commit
 	git push
+
+sync:
+	git fetch origin
+	git merge origin/master
