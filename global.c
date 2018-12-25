@@ -21,16 +21,16 @@ int main(){
     struct echiquier* changePlateau = &plateau;
     char fini = fgetc(sauvegarde);
     fgetc(sauvegarde);
-    struct ligne test;
+    /*struct ligne test;
     for (int i = 0; i <28; i++){
 	test = lectureLigne(sauvegarde);
-    }
-    printf("%d\n", test.exist);
+	}*/
+    //printf("%d\n", test.exist);
     if(fini == '0'){
 	initEchiquier(changePlateau);
-    }/* else {
+    } /*else {
 	DLSauvegarde(changePlateau, sauvegarde);
-    }
+    }*/
     int abandon = 1;
     char lecture[10];
     int deplacements = 1;
@@ -117,7 +117,7 @@ int main(){
 		}
 	    }
 	}
-    }*/
+    }
     fclose(sauvegarde);
     return EXIT_SUCCESS;
 }

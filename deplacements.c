@@ -219,7 +219,7 @@ int deplacementFou(struct piece* piece, struct echiquier* plateau){
     for(int i = 1; i+x<8 && y-i>=0; i++){
 	if (plateau->plateau[x+i][y-i].estVide){
 	    piece->deplacementsX[piece->nbDeplacements] = x+i;
-	    piece->deplacementsY[piece->nbDeplacements] = y-1;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
 	    piece->nbDeplacements++;
 	} else if (plateau->plateau[x+i][y-i].piece.couleur != couleur){
 	    piece->deplacementsX[piece->nbDeplacements] = x+i;
@@ -387,7 +387,7 @@ int deplacementDame(struct piece* piece, struct echiquier* plateau){
     for(int i = 1; i+x<8 && y-i>=0; i++){
 	if (plateau->plateau[x+i][y-i].estVide){
 	    piece->deplacementsX[piece->nbDeplacements] = x+i;
-	    piece->deplacementsY[piece->nbDeplacements] = y-1;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
 	    piece->nbDeplacements++;
 	} else if (plateau->plateau[x+i][y-i].piece.couleur != couleur){
 	    piece->deplacementsX[piece->nbDeplacements] = x+i;

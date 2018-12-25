@@ -32,14 +32,14 @@ struct echiquier createPlateau(){
 }
 
 void initEchiquier(struct echiquier* plateau){
-    /*for (int i = 0; i <8; i++){
+    for (int i = 0; i <8; i++){
 	plateau->plateau[i][1].piece = createPiont(i, 1, 0, plateau);
 	plateau->nbBlanc++;
 	plateau->plateau[i][1].estVide = 0;
 	plateau->plateau[i][6].piece = createPiont(i, 6, 1, plateau);
 	plateau->nbNoir++;
 	plateau->plateau[i][6].estVide = 0;
-    }*/
+    }
     struct piece sortie3 = createTour(0, 0, 0, plateau);
     plateau->plateau[0][0].piece = sortie3;
     struct piece sortie4 = createTour(0, 7, 1, plateau);
