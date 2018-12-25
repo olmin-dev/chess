@@ -26,3 +26,11 @@ exe: base
 clean:
 	rm -f *.o
 	rm -f projet
+
+add:
+	git add *.c
+	git add makefile
+	git add projet
+	git add sauvegarde.txt
+	git commit
+	git push
