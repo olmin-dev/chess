@@ -20,13 +20,15 @@ int main(){
     sauvegarde = fopen("sauvegarde.txt", "r+");
     struct echiquier* changePlateau = &plateau;
     char fini = fgetc(sauvegarde);
-    char dechet = fgetc(sauvegarde);
+    fgetc(sauvegarde);
+    struct ligne test;
     for (int i = 0; i <28; i++){
-	struct ligne test = lectureLigne(sauvegarde);
-	}/*
+	test = lectureLigne(sauvegarde);
+    }
+    printf("%d\n", test.exist);
     if(fini == '0'){
 	initEchiquier(changePlateau);
-    } else {
+    }/* else {
 	DLSauvegarde(changePlateau, sauvegarde);
     }
     int abandon = 1;

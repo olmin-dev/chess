@@ -32,6 +32,7 @@ add:
 	git add makefile
 	git add projet
 	git add sauvegarde.txt
+	git add	ToDoList.txt
 	git commit
 	git push
 

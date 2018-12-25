@@ -7,7 +7,7 @@
 
 struct ligne lectureLigne(FILE* sauv){
     struct ligne sortie;
-    char* type;
+    char type[8];
     int i = 0;
     char c = fgetc(sauv);
     while (c != ' '){
@@ -43,16 +43,16 @@ struct ligne lectureLigne(FILE* sauv){
     }
     char x = fgetc(sauv);
     char y = fgetc(sauv);
-    char dechet = fgetc(sauv);
+    fgetc(sauv);
     printf("%d, %d\n", x, y);
     printf("%d, %d\n", sortie.type, sortie.couleur);
     return sortie;
 }
-
+/*
 void DLSauvegarde(struct echiquier* plateau, FILE* sauv){
     printf("Aled");    
 }
 
 void ULSauvegarde(struct echiquier* plateau, FILE* sauv){
     printf("Aled");
-}
+    }*/
