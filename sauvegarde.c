@@ -7,7 +7,7 @@
 
 struct ligne lectureLigne(FILE* sauv){
     struct ligne sortie;
-    char type[8];
+    char type[4];
     int i = 0;
     char c = fgetc(sauv);
     while (c != ' '){
@@ -15,7 +15,6 @@ struct ligne lectureLigne(FILE* sauv){
 	i++;
 	c = fgetc(sauv);
     }
-    printf("%s\n", type);
     if (type[0] == 'p'){
 	sortie.type = PIONT;
     }
@@ -41,11 +40,16 @@ struct ligne lectureLigne(FILE* sauv){
     if (couleur == 'B'){
 	sortie.couleur = 1;
     }
+    fgetc(sauv);
     char x = fgetc(sauv);
     char y = fgetc(sauv);
     fgetc(sauv);
-    printf("%d, %d\n", x, y);
-    printf("%d, %d\n", sortie.type, sortie.couleur);
+    if(x > 60){
+	sortie.exist = 0;
+    } else {
+	sortie.x = x - 48;
+	sortie.y = y - 48;
+    }
     return sortie;
 }
 /*

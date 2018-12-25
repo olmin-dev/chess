@@ -33,6 +33,7 @@ add:
 	git add projet
 	git add sauvegarde.txt
 	git add	ToDoList.txt
+	git add README.txt
 	git commit
 	git push
 
