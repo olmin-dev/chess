@@ -1,0 +1,413 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "structBase.h"
+#include "deplacements.h"
+
+void MAJDeplacements(struct echiquier* plateau){
+    for (int i =0; i<8; i++){
+	for (int j = 0; j<8; j++){
+	    if(plateau->plateau[j][i].estVide == 0){
+		deplacement(&(plateau->plateau[j][i].piece), plateau);
+		//printf("(%d, %d) \t (%d, %d) \t %d \t %d\n", plateau.plateau[j][i].piece.positionX, plateau.plateau[j][i].piece.positionY, plateau.plateau[j][i].x, plateau.plateau[j][i].y, plateau.plateau[j][i].piece.nbDeplacements, plateau.plateau[j][i].piece.couleur);
+	    }
+	}
+    }
+}
+
+void deplacement(struct piece* piece, struct echiquier* plateau){
+    enum typePiece test = piece->type;
+    if (test == PIONT) {
+	deplacementPiont(piece, plateau);
+	return;
+    }
+    if (test == TOUR) {
+	deplacementTour(piece, plateau);
+	return;
+    }
+    if (test == FOU) {
+	deplacementFou(piece, plateau);
+	return;
+    }
+    if (test == CAVALIER) {
+	deplacementCavalier(piece, plateau);
+	return;
+    }
+    if (test == DAME) {
+	deplacementDame(piece, plateau);
+	return;
+    }
+    if (test == ROI) {
+	deplacementRoi(piece, plateau);
+	return;
+    }
+}
+
+void deplacementPiont(struct piece* piece, struct echiquier* plateau){
+    int x = piece->positionX;
+    int y = piece->positionY;
+    int couleur = piece->couleur;
+    piece->nbDeplacements = 0;
+    if (piece->couleur == 0){
+	if ((plateau->plateau[x][y+1].estVide || (plateau->plateau[x][y+1].piece.couleur != couleur)) && (y < 7)) {
+	    piece->nbDeplacements++;
+	    piece->deplacementsX[0] = x;
+	    piece->deplacementsY[0] = y+1;
+	}
+	if ((plateau->plateau[x][y+1].estVide) && (y < 6)) {
+	    piece->nbDeplacements++;
+	    piece->deplacementsX[1] = x;
+	    piece->deplacementsY[1] = y + 2;
+	}
+    } else {
+	if ((plateau->plateau[x][y-1].estVide || (plateau->plateau[x][y-1].piece.couleur != couleur)) && (y > 0)) {
+	    piece->nbDeplacements++;
+	    piece->deplacementsX[0] = x;
+	    piece->deplacementsY[0] = y-1;
+	}
+	if ((plateau->plateau[x][y-1].estVide) && (y > 1)) {
+	    piece->nbDeplacements++;
+	    piece->deplacementsX[1] = x;
+	    piece->deplacementsY[1] = y - 2;
+	}
+    }
+}
+
+void deplacementTour(struct piece* piece, struct echiquier* plateau){
+    int x = piece->positionX;
+    int y = piece->positionY;
+    int couleur = piece->couleur;
+    piece->nbDeplacements = 0;
+    for(int i = 1; i+x<8 ; i++){
+	if (plateau->plateau[i+x][y].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = i + x;
+	    piece->deplacementsY[piece->nbDeplacements] = y;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[i+x][y].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = i + x;
+	    piece->deplacementsY[piece->nbDeplacements] = y;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; x-i>=0 ; i++){
+	if (plateau->plateau[x-i][y].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x-i][y].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; i+y<8 ; i++){
+	if (plateau->plateau[x][y+i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x;
+	    piece->deplacementsY[piece->nbDeplacements] = y+1;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x][y+i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x;
+	    piece->deplacementsY[piece->nbDeplacements] = y+i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; y-i>=0 ; i++){
+	if (plateau->plateau[x][y-i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x][y-i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+}
+
+void deplacementFou(struct piece* piece, struct echiquier* plateau){
+    int x = piece->positionX;
+    int y = piece->positionY;
+    int couleur = piece->couleur;
+    piece->nbDeplacements = 0;
+    for(int i = 1; i+x<8 && i+y<8 ; i++){
+	if (plateau->plateau[i+x][y+i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = i + x;
+	    piece->deplacementsY[piece->nbDeplacements] = i + y;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[i+x][i + y].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = i + x;
+	    piece->deplacementsY[piece->nbDeplacements] = i + y;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; x-i>=0 && i+y<8 ; i++){
+	if (plateau->plateau[x-i][y+i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y+i;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x-i][y+i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y+i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; i+x<8 && y-i>=0; i++){
+	if (plateau->plateau[x+i][y-i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x+i;
+	    piece->deplacementsY[piece->nbDeplacements] = y-1;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x+i][y-i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x+i;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; x-i>=0 && y-i>=0; i++){
+	if (plateau->plateau[x-i][y-i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x-i][y-i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+}
+
+void deplacementCavalier(struct piece* piece, struct echiquier* plateau){
+    int x = piece->positionX;
+    int y = piece->positionY;
+    int couleur = piece->couleur;
+    piece->nbDeplacements = 0;
+    if ((x<7 && y<6) && (plateau->plateau[x+1][y+2].estVide || plateau->plateau[x+1][y+2].piece.couleur != couleur)){ //x+1 et y+2
+	piece->deplacementsX[piece->nbDeplacements] = x+1;
+	piece->deplacementsY[piece->nbDeplacements] = y+2;
+	piece->nbDeplacements++;
+    }
+    if ((x<6 && y<7) && (plateau->plateau[x+2][y+1].estVide || plateau->plateau[x+2][y+1].piece.couleur != couleur)){ //x+2 et y+1
+	piece->deplacementsX[piece->nbDeplacements] = x+2;
+	piece->deplacementsY[piece->nbDeplacements] = y+1;
+	piece->nbDeplacements++;
+    }
+    if ((x<7 && y>1) && (plateau->plateau[x+1][y-2].estVide || plateau->plateau[x+1][y-2].piece.couleur != couleur)){ //x+1 et y-2
+	piece->deplacementsX[piece->nbDeplacements] = x+1;
+	piece->deplacementsY[piece->nbDeplacements] = y-2;
+	piece->nbDeplacements++;
+    }
+    if ((x<6 && y>0) && (plateau->plateau[x+2][y-1].estVide || plateau->plateau[x+2][y-1].piece.couleur != couleur)){ //x+2 et y-1
+	piece->deplacementsX[piece->nbDeplacements] = x+2;
+	piece->deplacementsY[piece->nbDeplacements] = y-1;
+	piece->nbDeplacements++;
+    }
+    if ((x>0 && y<6) && (plateau->plateau[x-1][y+2].estVide || plateau->plateau[x-1][y+2].piece.couleur != couleur)){ //x-1 et y+2
+	piece->deplacementsX[piece->nbDeplacements] = x-1;
+	piece->deplacementsY[piece->nbDeplacements] = y+2;
+	piece->nbDeplacements++;
+    }
+    if ((x>1 && y<7) && (plateau->plateau[x-2][y+1].estVide || plateau->plateau[x-2][y+1].piece.couleur != couleur)){ //x-2 et y+1
+	piece->deplacementsX[piece->nbDeplacements] = x-2;
+	piece->deplacementsY[piece->nbDeplacements] = y+1;
+	piece->nbDeplacements++;
+    }
+    if ((x>0 && y>1) && (plateau->plateau[x-1][y-2].estVide || plateau->plateau[x-1][y-2].piece.couleur != couleur)){ //x-1 et y-2
+	piece->deplacementsX[piece->nbDeplacements] = x-1;
+	piece->deplacementsY[piece->nbDeplacements] = y-2;
+	piece->nbDeplacements++;
+    }
+    if ((x>1 && y>0) && (plateau->plateau[x-2][y-1].estVide || plateau->plateau[x-2][y-1].piece.couleur != couleur)){ //x-2 et y-1
+	piece->deplacementsX[piece->nbDeplacements] = x-2;
+	piece->deplacementsY[piece->nbDeplacements] = y-1;
+	piece->nbDeplacements++;
+    }
+}
+
+void deplacementDame(struct piece* piece, struct echiquier* plateau){
+    int x = piece->positionX;
+    int y = piece->positionY;
+    int couleur = piece->couleur;
+    piece->nbDeplacements = 0;
+    for(int i = 1; i+x<8 ; i++){
+	if (plateau->plateau[i+x][y].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = i + x;
+	    piece->deplacementsY[piece->nbDeplacements] = y;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[i+x][y].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = i + x;
+	    piece->deplacementsY[piece->nbDeplacements] = y;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; x-i>=0 ; i++){
+	if (plateau->plateau[x-i][y].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x-i][y].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; i+y<8 ; i++){
+	if (plateau->plateau[x][y+i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x;
+	    piece->deplacementsY[piece->nbDeplacements] = y+1;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x][y+i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x;
+	    piece->deplacementsY[piece->nbDeplacements] = y+i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; y-i>=0 ; i++){
+	if (plateau->plateau[x][y-i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x][y-i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+        for(int i = 1; i+x<8 && i+y<8 ; i++){
+	if (plateau->plateau[i+x][y+i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = i + x;
+	    piece->deplacementsY[piece->nbDeplacements] = i + y;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[i+x][i + y].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = i + x;
+	    piece->deplacementsY[piece->nbDeplacements] = i + y;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; x-i>=0 && i+y<8 ; i++){
+	if (plateau->plateau[x-i][y+i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y+i;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x-i][y+i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y+i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; i+x<8 && y-i>=0; i++){
+	if (plateau->plateau[x+i][y-i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x+i;
+	    piece->deplacementsY[piece->nbDeplacements] = y-1;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x+i][y-i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x+i;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+    for(int i = 1; x-i>=0 && y-i>=0; i++){
+	if (plateau->plateau[x-i][y-i].estVide){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	} else if (plateau->plateau[x-i][y-i].piece.couleur != couleur){
+	    piece->deplacementsX[piece->nbDeplacements] = x-i;
+	    piece->deplacementsY[piece->nbDeplacements] = y-i;
+	    piece->nbDeplacements++;
+	    break;
+	} else {
+	    break;
+	}
+    }
+}
+
+void deplacementRoi(struct piece* piece, struct echiquier* plateau){
+    int x = piece->positionX;
+    int y = piece->positionY;
+    int couleur = piece->couleur;
+    piece->nbDeplacements = 0;
+    if ((x<7) && (plateau->plateau[x+1][y].estVide || plateau->plateau[x+1][y].piece.couleur != couleur)){ //x+1 et y
+	piece->deplacementsX[piece->nbDeplacements] = x+1;
+	piece->deplacementsY[piece->nbDeplacements] = y;
+	piece->nbDeplacements++;
+    }
+    if ((x<7 && y>0) && (plateau->plateau[x+1][y-1].estVide || plateau->plateau[x+1][y-1].piece.couleur != couleur)){ //x+1 et y-1
+	piece->deplacementsX[piece->nbDeplacements] = x+1;
+	piece->deplacementsY[piece->nbDeplacements] = y-1;
+	piece->nbDeplacements++;
+    }
+    if ((y>0) && (plateau->plateau[x][y-1].estVide || plateau->plateau[x][y-1].piece.couleur != couleur)){ //x et y-1
+	piece->deplacementsX[piece->nbDeplacements] = x;
+	piece->deplacementsY[piece->nbDeplacements] = y-1;
+	piece->nbDeplacements++;
+    }
+    if ((x>0 && y>0) && (plateau->plateau[x-1][y-1].estVide || plateau->plateau[x-1][y-1].piece.couleur != couleur)){ //x-1 et y-1
+	piece->deplacementsX[piece->nbDeplacements] = x-1;
+	piece->deplacementsY[piece->nbDeplacements] = y-1;
+	piece->nbDeplacements++;
+    }
+    if ((x>0) && (plateau->plateau[x-1][y].estVide || plateau->plateau[x-1][y].piece.couleur != couleur)){ //x-1 et y
+	piece->deplacementsX[piece->nbDeplacements] = x-1;
+	piece->deplacementsY[piece->nbDeplacements] = y;
+	piece->nbDeplacements++;
+    }
+    if ((x>0 && y<7) && (plateau->plateau[x-1][y+1].estVide || plateau->plateau[x-1][y+1].piece.couleur != couleur)){ //x-1 et y+1
+	piece->deplacementsX[piece->nbDeplacements] = x-1;
+	piece->deplacementsY[piece->nbDeplacements] = y+1;
+	piece->nbDeplacements++;
+    }
+    if ((y<7) && (plateau->plateau[x][y+1].estVide || plateau->plateau[x][y+1].piece.couleur != couleur)){ //x et y+1
+	piece->deplacementsX[piece->nbDeplacements] = x;
+	piece->deplacementsY[piece->nbDeplacements] = y+1;
+	piece->nbDeplacements++;
+    }
+    if ((x<7 && y<7) && (plateau->plateau[x+1][y+1].estVide || plateau->plateau[x+1][y+1].piece.couleur != couleur)){ //x+1 et y+1
+	piece->deplacementsX[piece->nbDeplacements] = x+1;
+	piece->deplacementsY[piece->nbDeplacements] = y+1;
+	piece->nbDeplacements++;
+    }
+}

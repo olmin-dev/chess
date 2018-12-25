@@ -1,0 +1,19 @@
+To Do List
+
+XX Structure de piece
+XX Structure pour le plateau
+XX Structure pour une case
+XX Fonction d'affichage du plateau
+XX Structure pour les règles du jeu (cas de victoire, coup autorisé)
+XX Système de destruction de piont
+XX Interaction avec les joueurs)
+XX Fonction deplacement qui forme le tableau des cases atteignable par un piece
+XX Initialisation du plateau
+XX Afficher l'ensemble des possibilit"s de mouvements
+XX Demander quel mouvement effectuer
+XX Fonction deplacement (destruction possible d'un piont)
+-> Clean l'initialisation (nbBlanc++, 1 ligne..etc)
+XX Problème de mauvaise entrée (genre f7 au lieu de F7)
+-> Mouvement rock
+-> Changer le pion quand il arrive au fond du plateau
+-> Systeme de sauvegarde (ecriture dans un fichier dédié + interface)

@@ -1,0 +1,22 @@
+#ifndef _DEPLACEMENTS_
+#define _DEPLACEMENTS_ 
+
+// Prototypes de fonctions
+
+void MAJDeplacements(struct echiquier* plateau);
+
+void deplacement(struct piece* piece, struct echiquier* plateau);
+
+void deplacementPiont(struct piece* piece, struct echiquier* plateau);
+
+void deplacementTour(struct piece* piece, struct echiquier* plateau);
+
+void deplacementFou(struct piece* piece, struct echiquier* plateau);
+
+void deplacementCavalier(struct piece* piece, struct echiquier* plateau);
+
+void deplacementDame(struct piece* piece, struct echiquier* plateau);
+
+void deplacementRoi(struct piece* piece, struct echiquier* plateau);
+
+#endif
