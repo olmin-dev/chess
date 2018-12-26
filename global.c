@@ -26,7 +26,7 @@ int main(){
     if(fini == '0'){
 	initEchiquier(changePlateau);
     } else {
-	printf("Voulez vous reprendre l'ancienne partie ? (oui/non)\n");
+	printf("Voulez vous recommencer une partie ? (oui/non)\n");
 	char reponse[3];
 	fgets(reponse, 10, stdin);
 	if(reponse[0] == 'o'){
@@ -46,6 +46,7 @@ int main(){
     int couleur = -1;
     int echec = 0;
     int nbDeplacements = MAJDeplacements(changePlateau, echec, plateau.player);
+    int rock[4] = {1, 1, 1, 1};
     while (abandon && plateau.victoire == -1){
 
 	// enregistrement de la partie en cours
