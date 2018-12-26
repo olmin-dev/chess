@@ -16,8 +16,8 @@ struct piece createPiece(int x, int y, int type, int couleur){
 
 struct echiquier createPlateau(){
     struct echiquier sortie;
-    sortie.nbBlanc = 0;
-    sortie.nbNoir = 0;
+    sortie.nbRouge = 0;
+    sortie.nbBleu = 0;
     sortie.victoire = -1;
     sortie.player = 0; 
     for (int i = 0; i <8; i++){
@@ -33,11 +33,11 @@ struct echiquier createPlateau(){
 
 void initEchiquier(struct echiquier* plateau){
     for (int i = 0; i <8; i++){
-	plateau->plateau[i][1].piece = createPiont(i, 1, 0, plateau);
-	plateau->nbBlanc++;
+	plateau->plateau[i][1].piece = createPion(i, 1, 0, plateau);
+	plateau->nbRouge++;
 	plateau->plateau[i][1].estVide = 0;
-	plateau->plateau[i][6].piece = createPiont(i, 6, 1, plateau);
-	plateau->nbNoir++;
+	plateau->plateau[i][6].piece = createPion(i, 6, 1, plateau);
+	plateau->nbBleu++;
 	plateau->plateau[i][6].estVide = 0;
     }
     struct piece sortie3 = createTour(0, 0, 0, plateau);
@@ -74,7 +74,7 @@ void initEchiquier(struct echiquier* plateau){
     plateau->plateau[7][7].piece = sortie18;
 }
 
-struct piece createPiont(int i, int j, int couleur, struct echiquier* plateau){
+struct piece createPion(int i, int j, int couleur, struct echiquier* plateau){
     struct piece sortie;
     plateau->plateau[i][j].estVide = 0;
     sortie.positionX = i;

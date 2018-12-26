@@ -10,8 +10,8 @@ char piece[6][10];
 char abscisses[8];
 
 void printPlateau(struct echiquier plateau){
-    printf("Il y a %d pieces blanches sur le plateau et %d pieces noires\n", plateau.nbBlanc, plateau.nbNoir);
-    if (plateau.nbBlanc + plateau.nbNoir > 0){
+    printf("Il y a %d pieces blanches sur le plateau et %d pieces noires\n", plateau.nbRouge, plateau.nbBleu);
+    if (plateau.nbRouge + plateau.nbBleu > 0){
 	printf("\033[31mLes différentes pieces et leurs positions sont :\033[00m\n");
     } else {
 	return;
@@ -74,7 +74,7 @@ void afficherDeplacements(struct piece piece, struct echiquier* plateau, int dep
 	    int y = piece.deplacementsY[i];
 	    if (plateau->plateau[x][y].estVide){
 		plateau->plateau[x][y].estVide = 0;
-		plateau->plateau[x][y].piece = createPiont(x, y, -2, plateau);
+		plateau->plateau[x][y].piece = createPion(x, y, -2, plateau);
 	    } else {
 		plateau->plateau[x][y].piece.couleur = -1;
 	    }

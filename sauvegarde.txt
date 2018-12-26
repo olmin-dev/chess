@@ -1,6 +1,6 @@
-2
+1
 tour R A0
-pion R A3
+pion R A1
 pion B A6
 tour B A7
 cava R B0

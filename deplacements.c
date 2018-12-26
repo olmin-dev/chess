@@ -33,8 +33,8 @@ int deplacement(struct piece* piece, struct echiquier* plateau){
     int sortie = 0;
     enum typePiece test = piece->type;
     piece->nbDeplacements =0;
-    if (test == PIONT) {
-	sortie += deplacementPiont(piece, plateau);
+    if (test == PION) {
+	sortie += deplacementPion(piece, plateau);
 	return sortie;
     }
     if (test == TOUR) {
@@ -60,7 +60,7 @@ int deplacement(struct piece* piece, struct echiquier* plateau){
     return sortie;
 }
 
-int deplacementPiont(struct piece* piece, struct echiquier* plateau){
+int deplacementPion(struct piece* piece, struct echiquier* plateau){
     int x = piece->positionX;
     int y = piece->positionY;
     int couleur = piece->couleur;
@@ -482,8 +482,8 @@ int deplacementEchec(struct piece* piece, struct echiquier* plateau){
     int sortie = 0;
     enum typePiece test = piece->type;
     piece->nbDeplacements =0;
-    if (test == PIONT) {
-	sortie += deplacementPiontEchec(piece, plateau);
+    if (test == PION) {
+	sortie += deplacementPionEchec(piece, plateau);
 	return sortie;
     }
     if (test == TOUR) {
@@ -509,7 +509,7 @@ int deplacementEchec(struct piece* piece, struct echiquier* plateau){
     return sortie;
 }
 
-int deplacementPiontEchec(struct piece* piece, struct echiquier* plateau){
+int deplacementPionEchec(struct piece* piece, struct echiquier* plateau){
     int x = piece->positionX;
     int y = piece->positionY;
     int couleur = piece->couleur;

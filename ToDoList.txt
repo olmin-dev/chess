@@ -12,10 +12,7 @@ XX Initialisation du plateau
 XX Afficher l'ensemble des possibilit"s de mouvements
 XX Demander quel mouvement effectuer
 XX Fonction deplacement (destruction possible d'un piont)
--> Clean l'initialisation (nbBlanc++, 1 ligne..etc)
+XX Clean l'initialisation (nbBlanc++, 1 ligne..etc)
 XX Problème de mauvaise entrée (genre f7 au lieu de F7)
--> Mouvement rock
--> Changer le pion quand il arrive au fond du plateau
--> Systeme de sauvegarde (ecriture dans un fichier dédié + interface)
--> Interface de départ
--> Mise en place d'une IA (aléatoire ou réfléchis) (Pyhton ou C)
+XX Systeme de sauvegarde (ecriture dans un fichier dédié + interface)
+

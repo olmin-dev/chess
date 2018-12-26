@@ -20,7 +20,7 @@ struct ligne lectureLigne(FILE* sauv){
 	c = fgetc(sauv);
     }
     if (type[0] == 'p'){
-	sortie.type = PIONT;
+	sortie.type = PION;
     }
     if (type[0] == 't'){
 	sortie.type = TOUR;
@@ -84,12 +84,11 @@ void DLSauvegarde(struct echiquier* plateau, FILE* sauv){
     struct ligne sauvegarde[32];
     for(int i = 0; i<32; i++){
 	sauvegarde[i] = lectureLigne(sauv);
-	//printf("%d\t%d\t%d\n",sauvegarde[i].x, sauvegarde[i].y, sauvegarde[i].type);
     }
     for(int j = 0; j<32; j++){
 	if(sauvegarde[j].exist){
-	    if(sauvegarde[j].type == PIONT){
-		plateau->plateau[sauvegarde[j].x][sauvegarde[j].y].piece = createPiont(sauvegarde[j].x, sauvegarde[j].y, sauvegarde[j].couleur, plateau);
+	    if(sauvegarde[j].type == PION){
+		plateau->plateau[sauvegarde[j].x][sauvegarde[j].y].piece = createPion(sauvegarde[j].x, sauvegarde[j].y, sauvegarde[j].couleur, plateau);
 	    }
 	    if(sauvegarde[j].type == TOUR){
 		plateau->plateau[sauvegarde[j].x][sauvegarde[j].y].piece = createTour(sauvegarde[j].x, sauvegarde[j].y, sauvegarde[j].couleur, plateau);
