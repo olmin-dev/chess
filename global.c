@@ -26,7 +26,14 @@ int main(){
     if(fini == '0'){
 	initEchiquier(changePlateau);
     } else {
-	DLSauvegarde(changePlateau, sauvegarde);
+	printf("Voulez vous reprendre l'ancienne partie ? (oui/non)\n");
+	char reponse[3];
+	fgets(reponse, 10, stdin);
+	if(reponse[0] == 'o'){
+	    initEchiquier(changePlateau);
+	} else {
+	    DLSauvegarde(changePlateau, sauvegarde);
+	}
     }
     fclose(sauvegarde);
     int abandon = 1;
@@ -46,7 +53,7 @@ int main(){
 	UPSauvegarde(changePlateau, sauvegarde);
 	fclose(sauvegarde);
 	
-	//system("clear"); // clean du terminal
+	system("clear"); // clean du terminal
 	echec = testEchec(changePlateau);
 	nbDeplacements = MAJDeplacements(changePlateau, echec, plateau.player);
 	if((nbDeplacements == 0) && deplacements){
@@ -71,9 +78,17 @@ int main(){
 		fgets(lecture, 10, stdin);
 		if (strcmp("rouge",lecture) == -10){
 		    printf("Félicitaion \033[34mbleu\033[00m! Vous gagnez par abandon.\n");
+		    plateau.victoire = 0;
+		    sauvegarde = fopen("sauvegarde.txt","w");
+		    UPSauvegarde(changePlateau, sauvegarde);
+		    fclose(sauvegarde);
 		    return 0;
 		} else if (strcmp("bleu", lecture) == -10){
 		    printf("Félicitation \033[31mrouge\033[00m! Vous gagnez par abandon.\n");
+		    plateau.victoire = 1;
+		    sauvegarde = fopen("sauvegarde.txt","w");
+		    UPSauvegarde(changePlateau, sauvegarde);
+		    fclose(sauvegarde);
 		    return 0;
 		}
 	    }
