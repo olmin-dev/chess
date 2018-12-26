@@ -11,3 +11,5 @@ Compilation: make \\ compile le projet global
 	     make add \\ met à kour le github github.com/olmin-dev/chess
 	     make sync \\ met à jour le projet à partir de la page github
 	     make clean \\ nettoye le repertoire pour eviter des problemes de compilation à cause de version ulterieur du code (conseil: utiliser entre chaque compilation sauf si vous etes sur)
+
+ATTENTION: ne pas toucher à sauvegarde.txt

@@ -17,3 +17,5 @@ XX Problème de mauvaise entrée (genre f7 au lieu de F7)
 -> Mouvement rock
 -> Changer le pion quand il arrive au fond du plateau
 -> Systeme de sauvegarde (ecriture dans un fichier dédié + interface)
+-> Interface de départ
+-> Mise en place d'une IA (aléatoire ou réfléchis) (Pyhton ou C)

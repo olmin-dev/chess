@@ -12,25 +12,23 @@
 
 char piece[6][10] = {"pion", "tour", "fou", "cava", "dame", "roi"};
 char abscisses[8] = "ABCDEFGH";
-char couleurTab[2][20] = {"\033[31mrouge\033[00m", "\033[34mbleu\033[34m"};
+char couleurTab[2][20] = {"\033[31mrouge\033[00m", "\033[34mbleu\033[00m"};
+char color[2] = "RB";
+char alphabet[8] = "ABCDEFGH";
 
 int main(){      
     struct echiquier plateau = createPlateau();
     FILE* sauvegarde;
-    sauvegarde = fopen("sauvegarde.txt", "r+");
+    sauvegarde = fopen("sauvegarde.txt", "r");
     struct echiquier* changePlateau = &plateau;
     char fini = fgetc(sauvegarde);
     fgetc(sauvegarde);
-    // Lecture ligne par ligne
-    /*struct ligne info;
-    for (int i = 0; i <28; i++){
-	info = lectureLigne(sauvegarde);
-    }*/
     if(fini == '0'){
 	initEchiquier(changePlateau);
-    } /*else {
+    } else {
 	DLSauvegarde(changePlateau, sauvegarde);
-	}*/
+    }
+    fclose(sauvegarde);
     int abandon = 1;
     char lecture[10];
     int deplacements = 1;
@@ -42,10 +40,18 @@ int main(){
     int echec = 0;
     int nbDeplacements = MAJDeplacements(changePlateau, echec, plateau.player);
     while (abandon && plateau.victoire == -1){
+
+	// enregistrement de la partie en cours
+	sauvegarde = fopen("sauvegarde.txt","w");
+	UPSauvegarde(changePlateau, sauvegarde);
+	fclose(sauvegarde);
+	
+	//system("clear"); // clean du terminal
 	echec = testEchec(changePlateau);
 	nbDeplacements = MAJDeplacements(changePlateau, echec, plateau.player);
 	if((nbDeplacements == 0) && deplacements){
 	    printf("Bravo %s vous avait gangez car votre adversaire ne peut plus bouger!\n", couleurTab[(plateau.player + 1)%2]);
+	    plateau.victoire = (plateau.player + 1) %2;
 	}
 	afficherPlateau(changePlateau);
 	testVictoire(changePlateau);
@@ -117,7 +123,9 @@ int main(){
 		}
 	    }
 	}
-	}
+    }
+    sauvegarde = fopen("sauvegarde.txt","w");
+    UPSauvegarde(changePlateau, sauvegarde);
     fclose(sauvegarde);
     return EXIT_SUCCESS;
 }
