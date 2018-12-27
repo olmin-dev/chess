@@ -1,0 +1,14 @@
+* TODO Créer structures des pieces
+* TODO Créer structures pour le plateau
+* TODO Créer structures pour les cases
+* TODO Afficher le plateau
+* TODO Créer une structure pour les règles du jeu
+* TODO Mettre en place le système de destruction de piece
+* TODO Mettre en place un systeme d'interaction avec l'utilisateur
+* TODO Initialiser le plateau
+* TODO Afficher les mouvements possibles
+* TODO Demander le mouvements à effectuer
+* TODO Mettre en place une focntion de deplacement des pieces
+* TODO Nettoyer les noms de variables et les commentaires
+* TODO Gerer les problèmes de mauvaises entrée avec les minuscule
+* TODO Mettre en place un système de sauvegarde à chaque tour

@@ -32,7 +32,7 @@ add:
 	git add makefile
 	git add projet
 	git add sauvegarde.txt
-	git add	ToDoList.txt
+	git add	TODO.org
 	git add README.txt
 	git commit
 	git push
